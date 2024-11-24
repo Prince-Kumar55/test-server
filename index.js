@@ -1,19 +1,27 @@
 const express = require('express');
+
 const app = express();
+
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+let requestCount = 0;
 
-app.get('/sum', (req, res) => {
+function requestIncresers(req,res, next) {
+    requestCount = requestCount + 1;
+    console.log("Total no of requests: " + requestCount);
+    next();
+};
+function realSumHandler (req, res) {
+    // This is the main logic
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
         "print": "success",
         sum: a + b
     });
-})
+};
+
+app.get('/sum', requestIncresers , realSumHandler); 
 
 app.get('/multiply', (req, res) => {
     const a = Number(req.query.a);
@@ -25,6 +33,7 @@ app.get('/multiply', (req, res) => {
 })
 
 app.get('/subtract', (req, res) => {
+    requestIncresers(req,res);
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
