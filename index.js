@@ -23,7 +23,7 @@ function realSumHandler (req, res) {
 
 app.get('/sum', requestIncresers , realSumHandler); 
 
-app.get('/multiply', (req, res) => {
+app.get('/multiply',requestIncresers, (req, res) => {
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
@@ -32,7 +32,7 @@ app.get('/multiply', (req, res) => {
     });
 })
 
-app.get('/subtract', (req, res) => {
+app.get('/subtract', requestIncresers, (req, res) => {
     requestIncresers(req,res);
     const a = Number(req.query.a);
     const b = Number(req.query.b);
@@ -42,7 +42,7 @@ app.get('/subtract', (req, res) => {
     });
 })
 
-app.get('/divide', (req, res) => {
+app.get('/divide',requestIncresers,  (req, res) => {
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
