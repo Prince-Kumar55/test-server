@@ -21,9 +21,13 @@ function realSumHandler (req, res) {
     });
 };
 
-app.get('/sum', requestIncresers , realSumHandler); 
 
-app.get('/multiply',requestIncresers, (req, res) => {
+app.use(requestIncresers);
+
+//  better routing , add database, middlewares
+app.get('/sum', realSumHandler); 
+
+app.get('/multiply', (req, res) => {
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
@@ -32,7 +36,7 @@ app.get('/multiply',requestIncresers, (req, res) => {
     });
 })
 
-app.get('/subtract', requestIncresers, (req, res) => {
+app.get('/subtract', (req, res) => {
     requestIncresers(req,res);
     const a = Number(req.query.a);
     const b = Number(req.query.b);
@@ -42,7 +46,7 @@ app.get('/subtract', requestIncresers, (req, res) => {
     });
 })
 
-app.get('/divide',requestIncresers,  (req, res) => {
+app.get('/divide',  (req, res) => {
     const a = Number(req.query.a);
     const b = Number(req.query.b);
     res.json({
