@@ -1,61 +1,19 @@
-const express = require('express');
-
+const express = require("express");
 const app = express();
+const bodyParsers = require("body-parser");
 
-const port = 3000;
+//In express , If you want to send JSON data,
+// you need to first parse the JSON data.
 
-let requestCount = 0;
+app.use(bodyParsers.json());
 
-function requestIncresers(req,res, next) {
-    requestCount = requestCount + 1;
-    console.log("Total no of requests: " + requestCount);
-    next();
-};
-function realSumHandler (req, res) {
-    // This is the main logic
-    const a = Number(req.query.a);
-    const b = Number(req.query.b);
+app.post("/sum", function(req, res) {
+    console.log(req.body);
+    const a = parseInt(req.body.a);
+    const b = parseInt(req.body.b);
     res.json({
-        "print": "success",
-        sum: a + b
-    });
-};
-
-
-app.use(requestIncresers);
-
-//  better routing , add database, middlewares
-app.get('/sum', realSumHandler); 
-
-app.get('/multiply', (req, res) => {
-    const a = Number(req.query.a);
-    const b = Number(req.query.b);
-    res.json({
-        "massage": "success",
-        multiply: a * b
-    });
-})
-
-app.get('/subtract', (req, res) => {
-    requestIncresers(req,res);
-    const a = Number(req.query.a);
-    const b = Number(req.query.b);
-    res.json({
-        "massage": "success",
-        "subtract": a - b
-    });
-})
-
-app.get('/divide',  (req, res) => {
-    const a = Number(req.query.a);
-    const b = Number(req.query.b);
-    res.json({
-        "massage": "success",
-        divide: a / b
-    });
-})
-
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+        ans: a + b
+    })
 });
+
+app.listen(3000);
