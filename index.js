@@ -1,14 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
-const bodyParsers = require("body-parser");
+app.use(cors())
 
-//In express , If you want to send JSON data,
-// you need to first parse the JSON data.
-
-app.use(bodyParsers.json());
+app.use(express.json());
 
 app.post("/sum", function(req, res) {
-    console.log(req.body);
     const a = parseInt(req.body.a);
     const b = parseInt(req.body.b);
     res.json({
